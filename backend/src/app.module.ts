@@ -11,11 +11,9 @@ import { DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_DATABASE } from './config/co
 import { ProductsService } from './products/products.service';
 import { ProductsModule } from './products/products.module';
 // import { User } from './user/entities/user.entity';
-import { Product } from './products/entities/product.entity';
 import { DemoModule } from './demo/demo.module';
-import { HrModule } from './modules/hr/hr.module';
-import { AuthModule } from 'src/components/auth/auth.module';
-import { UsersModule } from 'src/components/users/users.module';
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -39,11 +37,10 @@ import { UsersModule } from 'src/components/users/users.module';
       }),
       inject: [ConfigService],
     }),
-    AuthModule,
-    UsersModule,
     ProductsModule,
     DemoModule,
-    HrModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, ProductsService],
