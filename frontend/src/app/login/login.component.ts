@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../core/auth/service/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,44 +11,33 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnInit {
 
-  form = this.buildForm();
-  isMobile = false;
-
-  private subscriptions: Subscription[] = [];
-  constructor(
-    // private breakpointObserver: BreakpointObserver,
-              private formBuilder: FormBuilder
-              ) { }
-
-  ngOnInit(): void {
-      // this.subscriptions.push(this.breakpointObserver.observe([
-      //     Breakpoints.XSmall,
-      //     Breakpoints.Small,
-      //     Breakpoints.Handset
-      // ]).subscribe(result => this.isMobile = result.matches));
-      this.form = this.buildForm();
-  }
-
-  ngOnDestroy(): void {
-      this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  }
-
-  login(): void {
-      if (this.form?.invalid) {
-          this.form?.markAllAsTouched();
-          return;
+    messageclass = ''
+    message = ''
+    Customerid: any;
+    editdata: any;
+    responsedata: any;
+  
+    constructor(private service: AuthService,private route:Router) {
+      localStorage.clear();
+    }
+    Login = new FormGroup({
+      username: new FormControl("", Validators.required),
+      password: new FormControl("", Validators.required)
+    });
+  
+    ngOnInit(): void {
+    }
+    ProceedLogin() {
+      if (this.Login.valid) {
+        this.service.ProceedLogin(this.Login.value).subscribe(result => {
+          if(result!=null){
+            this.responsedata=result;
+            localStorage.setItem('token',this.responsedata.accessToken)
+            this.route.navigate([''])
+          }
+  
+        });
       }
-      // TODO: make login call
-  }
-
-  resetValue(fieldControlName: string): void {
-      this.form?.get(fieldControlName)?.reset(null);
-  }
-
-  private buildForm(): FormGroup {
-      return this.formBuilder.group({
-          email: [ null, [ Validators.required, Validators.email ]],
-          password: [ null, [ Validators.required ]]
-      });
-  }
+    }
+    
 }

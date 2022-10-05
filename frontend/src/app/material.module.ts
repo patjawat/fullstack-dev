@@ -21,12 +21,14 @@ import { MatCardModule } from '@angular/material/card';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDividerModule} from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,

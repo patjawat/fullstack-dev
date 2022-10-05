@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn } from 'typeorm';
-// import { Roles } from 'src/auth/Roles';
+import { UserRole } from './Roles';
 
 @Entity()
 export class Users {
@@ -17,6 +17,8 @@ export class Users {
 
     @UpdateDateColumn()
     updated: Date
-    // @Column({ default: Roles.USER })
-    // role: number;
+
+    @Column({ type: "enum", enum: UserRole, default: UserRole.USER })
+    role: UserRole;
+
 }

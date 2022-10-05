@@ -25,4 +25,6 @@ export class UsersController {
     ): Promise<Users> {
         return this.userService.signUp(signUpDto)
     }
+
+
 }
