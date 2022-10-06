@@ -22,7 +22,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatDividerModule} from '@angular/material/divider';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -48,7 +48,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatPaginatorModule,
     MatCardModule,
     MatProgressBarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -70,7 +71,8 @@ import { HttpClientModule } from '@angular/common/http';
     MatPaginatorModule,
     MatCardModule,
     MatProgressBarModule,
-    MatDividerModule
+    MatDividerModule,
+    MatDialogModule
   ],
   providers: [MatDatepickerModule],
 })

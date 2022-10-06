@@ -6,12 +6,11 @@
    
      <div class="spacer"></div>
    
-    <a mat-button routerLink="">Home {{isLogin}}</a>
-    <a mat-button routerLink="post">Dummy</a>
-    <a mat-button routerLink="demo">Demo</a>
+    <a mat-button routerLink=""><mat-icon>home</mat-icon>Home</a>
+    <a mat-button routerLink="about">About</a>
+    <a mat-button routerLink="hr"><mat-icon>group</mat-icon>HR</a>
     <a mat-button routerLink="services">Services</a>
     <a mat-button routerLink="projects">Projects</a>
-    <a mat-button routerLink="login">Login</a>
-    <a mat-raised-button color="accent" routerLink="signup">Sign Up</a>
+    <a mat-raised-button color="accent" routerLink="login" *ngIf="isLogin">ออกจากระบบ</a>
    </mat-toolbar>
    
