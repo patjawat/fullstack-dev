@@ -1,0 +1,13 @@
+"use strict";
+exports.__esModule = true;
+exports.JWT_EXPIRES_IN = exports.JWT_SECRET = exports.DB_PORT = exports.DB_DATABASE = exports.DB_PASSWORD = exports.DB_USER = exports.DB_HOST = exports.SERVER_PORT = exports.SECRET_DB_CONNECTION = exports.MUSIC_DB_CONNECTION = void 0;
+exports.MUSIC_DB_CONNECTION = 'default';
+exports.SECRET_DB_CONNECTION = 'secret';
+exports.SERVER_PORT = 'SERVER_PORT';
+exports.DB_HOST = 'DB_HOST';
+exports.DB_USER = 'DB_USER';
+exports.DB_PASSWORD = 'DB_PASSWORD';
+exports.DB_DATABASE = 'DB_DATABASE';
+exports.DB_PORT = 'DB_PORT';
+exports.JWT_SECRET = 'JWT_SECRET';
+exports.JWT_EXPIRES_IN = 'JWT_EXPIRES_IN';

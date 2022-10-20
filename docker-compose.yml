@@ -1,47 +1,45 @@
-version: "3.5"
-
+version: '2'
 services:
-  admin:
-    image: phpmyadmin/phpmyadmin:latest
-    links:
-     - db:${MYSQL_HOST}
-    depends_on:
-     - db
-    ports:
-     - "8080:80"
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      PMA_HOST: ${MYSQL_HOST}
-      PMA_PORT: ${MYSQL_PORT}
-
-  db:
-    build: ./database
-    image: mysql:5.7
-    container_name: ${MYSQL_HOST}
-    volumes:
-      - ./database/data:/var/lib/mysql
-    ports:
-      - "${MYSQL_PORT}:${MYSQL_PORT}"
-    environment:
-      MYSQL_TCP_PORT: ${MYSQL_PORT}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DB_NAME}
-
-  backend:
-    build: ./backend
-    image: node:9-alpine
-    working_dir: /app
+  mariaDBFullStack:
+    image: arm64v8/mariadb
+    hostname: mariadbFullStack
+    container_name: mariaDBFullStack
     restart: always
-    container_name: backend
-    links:
-      - db:${MYSQL_HOST}
-    depends_on:
-      - db
-    ports:
-      - "${PORT}:${PORT}"
     volumes:
-      - ./backend:/app
-    expose:
-      - "${PORT}"
-    command: 'yarn run start:dev'
-    env_file: .env
+      - /Users/patjawat/Downloads/:/home/
+      - ./docker/mariadb/data/:/var/lib/mysql
+    command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_general_ci']
+
+    ports:
+      - 3306:3306
+    environment:
+      - TZ=Asia/Bangkok
+      - MYSQL_ROOT_PASSWORD=docker
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=docker
+      - MYSQL_ROOT_HOST=% 
+  # mongo:
+  #   image: mongo:4.4
+  #   ports:
+  #       - 27017:27017
+  #   environment:
+  #         - MONGO_INITDB_ROOT_USERNAME=root
+  #         - MONGO_INITDB_ROOT_PASSWORD=docker
+  #         - MONGO_INITDB_DATABASE=admin
+  #         - MONGO_INITDB_USERNAME=admin
+  #         - MONGO_INITDB_PASSWORD=112233
+  #   volumes:
+  #         - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh
+  #         - ./docker/mongo:/data/db
+
+  phpmyadmin_fullstack:
+    image: arm64v8/phpmyadmin
+    restart: always
+    links:
+      - mariaDBFullStack:db
+    ports:
+      - 8300:80
+    environment:
+      MYSQL_USERNAME: root
+      MYSQL_ROOT_PASSWORD: docker
+      PMA_HOST: mariaDBFullStack

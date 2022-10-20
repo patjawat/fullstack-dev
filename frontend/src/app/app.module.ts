@@ -18,7 +18,8 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { AngularMaterialModule } from './material.module'
 import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
 import {MenuItem} from 'primeng/api';  
-import { TableModule } from 'primeng/table';  
+import { TableModule } from 'primeng/table';
+import { DemoComponent } from './demo/demo.component';  
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { TableModule } from 'primeng/table';
     LoginComponent,
     AboutComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    DemoComponent
   ],
   imports: [
     BrowserModule,
