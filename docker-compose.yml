@@ -1,7 +1,7 @@
 version: '2'
 services:
   mariaDBFullStack:
-    image: arm64v8/mariadb
+    image: mariadb
     hostname: mariadbFullStack
     container_name: mariaDBFullStack
     restart: always
@@ -33,7 +33,7 @@ services:
   #         - ./docker/mongo:/data/db
 
   phpmyadmin_fullstack:
-    image: arm64v8/phpmyadmin
+    image: phpmyadmin
     restart: always
     links:
       - mariaDBFullStack:db
