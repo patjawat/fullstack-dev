@@ -35,12 +35,11 @@ export class PostService {
         message: ['Something\s wrong I can feel it.']
       })
     }
-
-
   }
 
-  findAll() {
-    return `This action returns all post`;
+  async findAll(){
+    // return await this.postRepository.find()
+    return await 'Hello';
   }
 
   findOne(id: number) {
