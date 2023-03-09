@@ -11,6 +11,7 @@ export class PostController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
+  
   create(
     @Body() createPostDto: CreatePostDto,
     @Request() { user }: any,

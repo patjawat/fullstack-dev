@@ -10,27 +10,36 @@ import { RoleGuard } from './core/auth/guards/role.guard';
 
 const routes: Routes = [
   {
-    path: '', component: HomeLayoutComponent,
-    // path: '', component: HomeLayoutComponent, canActivate: [AuthGuard],
+    path: '',
+    component: HomeLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'about', component: AboutComponent }
-    ]
+      { path: 'about', component: AboutComponent },
+    ],
   },
   {
-    path: '', component: LoginLayoutComponent,
-    children: [
-      { path: 'login', component: LoginComponent }
-    ], 
+    path: '',
+    component: LoginLayoutComponent,
+    children: [{ path: 'login', component: LoginComponent }],
     // canActivate: [RoleGuard]
-
   },
-  { path: 'hr', component: HomeLayoutComponent,
-   loadChildren: () => import('./modules/hr/hr.module').then(m => m.HrModule) },
+  {
+    path: 'hr',
+    component: HomeLayoutComponent,
+    loadChildren: () =>
+      import('./modules/hr/hr.module').then((m) => m.HrModule),
+  },
+  {
+    path: 'post',
+    component: HomeLayoutComponent,
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./post/post.module').then((m) => m.PostModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
