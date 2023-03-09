@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,42 +9,33 @@ import { Users } from 'src/users/users.entity';
 @Injectable()
 export class PostService {
   constructor(
-   @InjectRepository(Post)
-   private postRepository: Repository<Post>
-  ){
+    @InjectRepository(Post)
+    private postRepository: Repository<Post>
+  ) {
 
   }
-  create(createPostDto: CreatePostDto,user:Users): Promise<Post> {
+  async create(createPostDto: CreatePostDto, user: Users): Promise<Post> {
 
     const {
       title,
       content,
-  } = createPostDto
+    } = createPostDto
 
-  const post = this.postRepository.create({
+    const post = this.postRepository.create({
       title,
       content,
       user,
-  })
+    })
 
-  return this.postRepository.save(post);
-  // try {
-  //     await this.taskRepository.save(task)
-  //     return task
-  // } catch(e) {
-  //     throw new ConflictException({
-  //         message: ['Something\s wrong I can feel it.']
-  //     })
-  // }
+    try {
+      return this.postRepository.save(post);
+      return post
+    } catch (e) {
+      throw new ConflictException({
+        message: ['Something\s wrong I can feel it.']
+      })
+    }
 
-  // try {
-  //   const post = this.postRepository.create(createPostDto);
-  //   return this.postRepository.save(post,user);
-  // } catch (error) {
-  //   throw new Error(error)
-    
-  // }
-    
 
   }
 
