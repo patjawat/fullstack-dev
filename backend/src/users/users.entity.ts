@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn,CreateDateColumn,UpdateDateColumn, OneToMany } from 'typeorm';
 import { UserRole } from './Roles';
+import { Post } from 'src/post/entities/post.entity';
 
 @Entity()
 export class Users {
@@ -21,4 +22,6 @@ export class Users {
     @Column({ type: "enum", enum: UserRole, default: UserRole.USER })
     role: UserRole;
 
+    @OneToMany(type => Post, posts => posts.user)
+    posts: Post[]
 }

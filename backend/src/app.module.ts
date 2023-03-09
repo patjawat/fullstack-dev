@@ -12,9 +12,11 @@ import { ProductsService } from './products/products.service';
 import { ProductsModule } from './products/products.module';
 // import { User } from './user/entities/user.entity';
 import { DemoModule } from './demo/demo.module';
-import { UsersModule } from './auth/users/users.module';
+import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { EmpoyeeModule } from './empoyee/empoyee.module';
+import { PostModule } from './post/post.module';
+import { Post } from './post/entities/post.entity';
 
 @Module({
   imports: [
@@ -42,7 +44,8 @@ import { EmpoyeeModule } from './empoyee/empoyee.module';
     DemoModule,
     UsersModule,
     AuthModule,
-    EmpoyeeModule
+    EmpoyeeModule,
+    PostModule
   ],
   controllers: [AppController],
   providers: [AppService, ProductsService],
