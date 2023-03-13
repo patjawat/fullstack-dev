@@ -17,6 +17,7 @@ import { AuthModule } from './auth/auth.module';
 import { EmpoyeeModule } from './empoyee/empoyee.module';
 import { PostModule } from './post/post.module';
 import { Post } from './post/entities/post.entity';
+import { PatientModule } from './patient/patient.module';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { Post } from './post/entities/post.entity';
     UsersModule,
     AuthModule,
     EmpoyeeModule,
-    PostModule
+    PostModule,
+    PatientModule
   ],
   controllers: [AppController],
   providers: [AppService, ProductsService],
