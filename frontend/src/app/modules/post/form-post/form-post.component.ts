@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
+
+interface Category {
+  value: number;
+  text: string;
+}
 
 @Component({
   selector: 'app-form-post',
@@ -7,9 +15,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormPostComponent implements OnInit {
 
-  constructor() { }
+  form: FormGroup;
+  
+  constructor(
+    private _fb: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+  ) { 
+    this.form = _fb.group({
+      title: '',
+      content: '',
+      category: '',
+    })
+  }
+
+  category: Category[] = [
+    { value: 1, text: 'Steak' },
+    { value: 2, text: 'Pizza' },
+    { value: 3, text: 'Tacos' },
+  ];
+
 
   ngOnInit(): void {
+    this.loadInitialForm()
+    
+  }
+  
+  loadInitialForm(){
+    
+    console.log('Open');
+  }
+
+  onFormSubmit() {
+    console.log(this.form.value);
+    
   }
 
 }

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {CookieService} from 'ngx-cookie-service';
 import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
-import { TokenInterceptorService } from './core/auth/service/token-interceptor.service';
+import { TokenInterceptorService } from './core/auth/services/token-interceptor.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,7 +20,8 @@ import {AccordionModule} from 'primeng/accordion';     //accordion and accordion
 import {MenuItem} from 'primeng/api';  
 import { TableModule } from 'primeng/table';
 import { DemoComponent } from './demo/demo.component';  
-
+import { PostModule } from './modules/post/post.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [

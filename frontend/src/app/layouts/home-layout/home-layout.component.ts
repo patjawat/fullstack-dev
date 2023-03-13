@@ -12,4 +12,7 @@ export class HomeLayoutComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  displayedColumns = ['date_posted', 'title', 'category', 'delete'];
+
+
 }

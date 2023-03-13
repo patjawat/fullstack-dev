@@ -1,1 +1,48 @@
-<p>form-post works!</p>
+<div mat-dialog-title>
+  <h2>สร้างใหม่</h2>
+</div>
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>ชื่อเรื่อง</mat-label>
+        <input
+          matInput
+          matInputCommified
+          type="text"
+          placeholder="ระบุชื่อ"
+          formControlName="title"
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="example-full-width">
+        <mat-label>เนื้อหา</mat-label>
+        <textarea
+          matInput
+          placeholder="ระบุเนื้อหา"
+          formControlName="content"
+        ></textarea>
+      </mat-form-field>
+
+      <div class="row">
+        <mat-form-field appearance="outline">
+          <mat-label>หมวดหมู่</mat-label>
+          <mat-select formControlName="category">
+            <mat-option *ngFor="let cat of category" [value]="cat.value">
+              {{ cat.text }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">
+      ยกเลิก
+    </button>
+    <button mat-raised-button color="primary" type="submit">
+      {{ data ? "แก้ไข" : "บันทึก" }}
+    </button>
+  </div>
+</form>
