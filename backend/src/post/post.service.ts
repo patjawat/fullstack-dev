@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Post } from './entities/post.entity';
 import { Users } from 'src/users/users.entity';
+import { Category } from 'src/category/entities/category.entity';
 
 @Injectable()
 export class PostService {
@@ -19,12 +20,15 @@ export class PostService {
     const {
       title,
       content,
+      category
     } = createPostDto
 
     const post = this.postRepository.create({
       title,
       content,
+      category,
       user,
+      
     })
 
     try {
@@ -35,20 +39,22 @@ export class PostService {
         message: ['Something\s wrong I can feel it.']
       })
     }
-
-
   }
 
-  findAll() {
-    return `This action returns all post`;
+  async findAll():Promise<Post[]> {
+    return await this.postRepository.find({ relations: {
+      user: true,
+      category:true
+  },});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+  return  await this.postRepository.findOne({ where: { id: id } });
+   
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, updatePostDto: UpdatePostDto) {
+    return await this.postRepository.update(id, updatePostDto);
   }
 
   remove(id: number) {

@@ -4,6 +4,7 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { JwtAuthGuard } from '../auth/jwt/jwt-auth.guard';
 import { LocalAuthGuard } from '../auth/local/local-auth.guard';
+import { Category } from '../category/entities/category.entity';
 
 @Controller('post')
 export class PostController {

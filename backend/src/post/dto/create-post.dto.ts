@@ -1,5 +1,6 @@
 
 import { IsNotEmpty } from "class-validator";
+import { Category } from 'src/category/entities/category.entity';
 
 export class CreatePostDto {
 
@@ -8,4 +9,7 @@ export class CreatePostDto {
 
     @IsNotEmpty()
     content: string
+    
+    category: Category
+
 }
