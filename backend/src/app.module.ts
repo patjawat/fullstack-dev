@@ -19,6 +19,7 @@ import { PostModule } from './post/post.module';
 import { Post } from './post/entities/post.entity';
 import { PatientModule } from './patient/patient.module';
 import { CategoryModule } from './category/category.module';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
@@ -49,7 +50,8 @@ import { CategoryModule } from './category/category.module';
     EmpoyeeModule,
     PostModule,
     PatientModule,
-    CategoryModule
+    CategoryModule,
+    UploadsModule
   ],
   controllers: [AppController],
   providers: [AppService, ProductsService],
