@@ -17,11 +17,8 @@ import { AuthModule } from './auth/auth.module';
 import { EmpoyeeModule } from './empoyee/empoyee.module';
 import { PostModule } from './post/post.module';
 import { Post } from './post/entities/post.entity';
-<<<<<<< HEAD
 import { PatientModule } from './patient/patient.module';
-=======
 import { CategoryModule } from './category/category.module';
->>>>>>> refs/remotes/origin/main
 
 @Module({
   imports: [
@@ -51,11 +48,8 @@ import { CategoryModule } from './category/category.module';
     AuthModule,
     EmpoyeeModule,
     PostModule,
-<<<<<<< HEAD
-    PatientModule
-=======
+    PatientModule,
     CategoryModule
->>>>>>> refs/remotes/origin/main
   ],
   controllers: [AppController],
   providers: [AppService, ProductsService],
