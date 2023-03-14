@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { PatientService } from 'src/app/core/services/patient.service';
 
@@ -15,6 +15,7 @@ export class FormPatientComponent {
   constructor(
     private patientService: PatientService,
     private _fb: FormBuilder,
+    private _dialogRef: MatDialogRef<FormPatientComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
 
   ) { 
@@ -28,23 +29,46 @@ export class FormPatientComponent {
     })
   }
 
+  ngOnInit(): void {
+    this.form.patchValue(this.data)
+  }
+
   onFormSubmit() {
-    const formData = new FormData();
-    // formData.append('fname', this.form.get('fname')?.value);  
-    formData.append('file', this.form.get('file')?.value);
-    formData.append('fname', this.form.get('fname')?.value);
-    formData.append('lname', this.form.get('lname')?.value);
-    formData.append('cid', this.form.get('cid')?.value);
-    this.patientService.create(formData).subscribe((res)=>{
-        console.log(res)
-      })
-    // this.http.post('http://localhost:8001/upload.php', formData)
-    //   .subscribe(res => {
-    //     console.log(res);
-    //     alert('Uploaded Successfully.');
+
+    if (this.form.valid) {
+      if (this.data) {
+        this.patientService.update(this.data.id,this.form.value).subscribe({
+          next: (val: any) => {
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+          },
+
+        });
+      } else {
+
+        this.patientService.create(this.form.value).subscribe({
+          next: (val: any) => {
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+          },
+        });
+      }
+    }
+
+    // const formData = new FormData();
+    // formData.append('file', this.form.get('file')?.value);
+    // formData.append('fname', this.form.get('fname')?.value);
+    // formData.append('lname', this.form.get('lname')?.value);
+    // formData.append('cid', this.form.get('cid')?.value);
+    // this.patientService.create(formData).subscribe((res)=>{
+    //     console.log(res)
     //   })
-    console.log(formData);
-    
+
+
   }
   
 

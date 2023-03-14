@@ -22,4 +22,8 @@ export class PatientService {
     return this._http.post(this.apiurl,data)
   }
 
+  update(id:number,data:any):Observable<any>  {
+    return this._http.post(this.apiurl,data)
+  }
+
 }

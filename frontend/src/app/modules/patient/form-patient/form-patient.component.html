@@ -1,5 +1,5 @@
 <div mat-dialog-title>
-  <h2>สร้างใหม่</h2>
+  <h2>{{ data ? "แก้ไข" : "สร้างใหม่" }}</h2>
 </div>
 <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="form-patient">
   <div mat-dialog-content class="content">
@@ -87,7 +87,7 @@
 
       <div class="col-4">
         <mat-card class="example-card">
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <img mat-card-image src="https://patjawat.github.io/images/avatar.jpg" alt="Photo of a Shiba Inu">
           <mat-card-content>
 
           </mat-card-content>
@@ -133,7 +133,7 @@
     <button mat-raised-button type="button" [mat-dialog-close]="false">
       ยกเลิก
     </button>
-    <button mat-raised-button color="primary" type="submit">
+    <button mat-raised-button color="{{data ? 'accent' : 'primary'}}" type="submit">
       {{ data ? "แก้ไข" : "บันทึก" }}
     </button>
   </div>
