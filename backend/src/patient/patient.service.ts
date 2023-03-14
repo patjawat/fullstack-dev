@@ -14,7 +14,9 @@ export class PatientService {
 
   async create(createPatientDto: CreatePatientDto): Promise<Patient> {
     const patient = await this.patientRepository.create(createPatientDto);
-    return await this.patientRepository.save(patient);
+    // return await this.patientRepository.save(patient);
+    console.log(patient)
+    return await patient
   }
 
   async findAll():Promise<Patient[]> {

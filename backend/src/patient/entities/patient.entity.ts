@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Upload } from "src/uploads/entities/upload.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 enum Gender {
     Male,
@@ -39,6 +40,9 @@ export class Patient {
     @Column({ nullable: true, default: null})
     status:string
 
+    @Column({ nullable: true, default: null})
+    photo:string
+
     @CreateDateColumn()
     created!: Date;
   
@@ -53,5 +57,11 @@ export class Patient {
 
     @Column({ nullable: true, default: null})
     updatedBy:string
+
+    // @OneToOne(type => Upload, photo => photo.patient)
+    // photo:Upload
+
+    // @ManyToOne(type => Category, category => category.posts)
+    // category:Category
 
 }

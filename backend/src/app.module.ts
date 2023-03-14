@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,6 +21,8 @@ import { Post } from './post/entities/post.entity';
 import { PatientModule } from './patient/patient.module';
 import { CategoryModule } from './category/category.module';
 import { UploadsModule } from './uploads/uploads.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Module({
   imports: [
@@ -42,6 +45,12 @@ import { UploadsModule } from './uploads/uploads.module';
         logging: false
       }),
       inject: [ConfigService],
+    }),
+    // MulterModule.register({
+    //   dest: './files',
+    // }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'files')
     }),
     ProductsModule,
     DemoModule,
