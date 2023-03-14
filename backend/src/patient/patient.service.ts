@@ -13,6 +13,7 @@ export class PatientService {
   }
 
   async create(createPatientDto: CreatePatientDto,file): Promise<Patient> {
+   
     const newPatient  = {
       fname:createPatientDto.fname,
       lname:createPatientDto.lname,
@@ -25,8 +26,6 @@ export class PatientService {
  
     const patient = await this.patientRepository.create(newPatient);
     return await this.patientRepository.save(patient);
-    console.log(file)
-    return await patient
 
   }
 
