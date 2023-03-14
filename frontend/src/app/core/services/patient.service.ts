@@ -14,6 +14,9 @@ export class PatientService {
     private _http:HttpClient,
   ) { }
 
+  getAllPatient():Observable<any>{
+      return this._http.get(this.apiurl);
+    }
 
   create(data:any):Observable<any>  {
     return this._http.post(this.apiurl,data)

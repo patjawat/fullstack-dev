@@ -5,12 +5,14 @@ import { PatientRoutingModule } from './patient-routing.module';
 import { PatientComponent } from './patient.component';
 import { FormPatientComponent } from './form-patient/form-patient.component';
 import { AngularMaterialModule } from 'src/app/material.module';
+import { ListPatientComponent } from './list-patient/list-patient.component';
 
 
 @NgModule({
   declarations: [
     PatientComponent,
-    FormPatientComponent
+    FormPatientComponent,
+    ListPatientComponent
   ],
   imports: [
     CommonModule,

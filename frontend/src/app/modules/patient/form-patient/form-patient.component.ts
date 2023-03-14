@@ -23,6 +23,7 @@ export class FormPatientComponent {
       lname: '',
       cid: '',
       phone:'',
+      file:'',
       fileSource:''
     })
   }
@@ -30,9 +31,11 @@ export class FormPatientComponent {
   onFormSubmit() {
     const formData = new FormData();
     // formData.append('fname', this.form.get('fname')?.value);  
-    formData.append('file', this.form.get('fileSource')?.value);
-    formData.append('data', this.form.value);
-      this.patientService.create(formData).subscribe((res)=>{
+    formData.append('file', this.form.get('file')?.value);
+    formData.append('fname', this.form.get('fname')?.value);
+    formData.append('lname', this.form.get('lname')?.value);
+    formData.append('cid', this.form.get('cid')?.value);
+    this.patientService.create(formData).subscribe((res)=>{
         console.log(res)
       })
     // this.http.post('http://localhost:8001/upload.php', formData)
@@ -51,7 +54,7 @@ export class FormPatientComponent {
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
       this.form.patchValue({
-        fileSource: file
+        file: file
       });
     }
     
