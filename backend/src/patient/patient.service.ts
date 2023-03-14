@@ -12,11 +12,22 @@ export class PatientService {
     private patientRepository: Repository<Patient>) {
   }
 
-  async create(createPatientDto: CreatePatientDto): Promise<Patient> {
-    const patient = await this.patientRepository.create(createPatientDto);
-    // return await this.patientRepository.save(patient);
-    console.log(patient)
+  async create(createPatientDto: CreatePatientDto,file): Promise<Patient> {
+    const newPatient  = {
+      fname:createPatientDto.fname,
+      lname:createPatientDto.lname,
+      gender:createPatientDto.gender,
+      birthday:createPatientDto.birthday,
+      dob:createPatientDto.dob,
+      address:createPatientDto.address,
+      photo:file
+    }
+ 
+    const patient = await this.patientRepository.create(newPatient);
+    return await this.patientRepository.save(patient);
+    console.log(file)
     return await patient
+
   }
 
   async findAll():Promise<Patient[]> {

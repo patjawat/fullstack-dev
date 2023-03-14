@@ -4,7 +4,22 @@ import { CreateUploadDto } from './dto/create-upload.dto';
 import { UpdateUploadDto } from './dto/update-upload.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { extname } from 'path';
+import path, { extname } from 'path';
+import { v4 as uuidv4 } from 'uuid';
+
+export const storage = {
+  storage: diskStorage({
+      destination: './uploads/profileimages',
+      filename: (req, file, cb) => {
+          const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
+          const extension: string = path.parse(file.originalname).ext;
+
+          cb(null, `${filename}${extension}`)
+      }
+  })
+
+}
+
 @Controller('uploads')
 export class UploadsController {
   constructor(private readonly uploadsService: UploadsService) {}
@@ -16,7 +31,7 @@ export class UploadsController {
       storage: diskStorage({
         destination: './public/files',
         filename: (req, file, callback) => {
-          const uniqueSuffix =
+        const uniqueSuffix =
             Date.now() + '-' + Math.round(Math.random() * 1e9);
           const ext = extname(file.originalname);
           const filename = `${uniqueSuffix}${ext}`;
