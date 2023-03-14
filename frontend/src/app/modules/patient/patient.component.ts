@@ -18,18 +18,10 @@ export class PatientComponent {
   }
 
   ngOnInit() {
-    this.loadPatient();
+
   }
 
-  loadPatient(){
-    this.patientService.getAllPatient().subscribe({
-      next: (res:any) =>{
-        console.log(res);
-      },error(err:any) {
-      console.log(err);
-      },
-    });
-  }
+
 
   openDialog() {
     this._dialog.open(FormPatientComponent);
