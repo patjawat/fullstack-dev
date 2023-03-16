@@ -11,6 +11,7 @@ import { PatientService } from 'src/app/core/services/patient.service';
 })
 export class FormPatientComponent {
   form: FormGroup;
+  fileUrl:any
   
   constructor(
     private patientService: PatientService,
@@ -31,6 +32,7 @@ export class FormPatientComponent {
 
   ngOnInit(): void {
     this.form.patchValue(this.data)
+    this.fileUrl = this.data.upload.filename
   }
 
   onFormSubmit() {

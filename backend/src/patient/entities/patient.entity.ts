@@ -1,3 +1,4 @@
+import { Expose } from "class-transformer";
 import { Upload } from "src/uploads/entities/upload.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
@@ -10,7 +11,11 @@ enum Gender {
 @Entity()
 export class Patient {
 
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('uuid')
+  id: string
+
+  @Expose()
+  @Column({ comment: 'ชื่อ', nullable: true, default: null })
   hn: string
 
   @Column({ comment: 'ชื่อ', nullable: true, default: null })

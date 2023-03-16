@@ -44,7 +44,7 @@ export class PostService {
   async findAll():Promise<Post[]> {
     return await this.postRepository.find({ relations: {
       user: true,
-      category:true
+      category:true,
   },});
   }
 

@@ -50,8 +50,10 @@ import { diskStorage } from 'multer';
     //   dest: './files',
     // }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'files')
+      rootPath: join(__dirname, '..', 'public/files'),
+      exclude: ['/api/(.*)'],
     }),
+    
     ProductsModule,
     DemoModule,
     UsersModule,

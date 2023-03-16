@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 import { UploadsService } from 'src/uploads/uploads.service';
 import { CreateUploadDto } from 'src/uploads/dto/create-upload.dto';
 import { storage } from 'src/config/storage.config';
-
+import { PatientInterceptor } from './interceptor/patient.Interceptor';
+import { ApiResponse } from '@nestjs/swagger';
 
 
 
@@ -17,24 +18,28 @@ export class PatientController {
   constructor(
     // private readonly uploadService:UploadsService,
     private readonly patientService: PatientService,
-    ) {}
+  ) { }
 
 
   @Post()
   @UseInterceptors(FileInterceptor('file', storage))
-  create(@Body() createPatientDto: CreatePatientDto,createUploadDto:CreateUploadDto,@UploadedFile() file) {
-      return this.patientService.create(createPatientDto,file);
-    
+  create(@Body() createPatientDto: CreatePatientDto, createUploadDto: CreateUploadDto, @UploadedFile() file) {
+    return this.patientService.create(createPatientDto, file);
+
   }
   // create(@Body() createPatientDto: CreatePatientDto,createUploadDto:CreateUploadDto,@UploadedFile() file) {
   // // return file;
   // console.log(file);
-  
-  // }
 
+  // }
+  
   @Get()
+  @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
+  // @UseInterceptors(PatientInterceptor)
   findAll() {
-    return this.patientService.findAll();
+    return this.patientService.findAll()
+
+
   }
 
   @Get(':id')
@@ -52,3 +57,6 @@ export class PatientController {
     return this.patientService.remove(+id);
   }
 }
+
+
+

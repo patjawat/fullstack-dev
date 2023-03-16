@@ -16,12 +16,13 @@ export class UploadsService {
   }
   async create(file):Promise<Upload> {
     const fileUpload = {
-      filename:file.name,
+      filename:file.filename,
       originalname: file.originalname,
       size: file.size,
       type: file.mimetype,
       path: file.path
     }
+    
     const upload = this.uploadRepository.create(fileUpload);
     return await this.uploadRepository.save(upload);
   }

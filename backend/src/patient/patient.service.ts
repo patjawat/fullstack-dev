@@ -15,6 +15,9 @@ import { UploadsService } from 'src/uploads/uploads.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { storage } from 'src/config/storage.config';
 
+
+
+
 @Injectable()
 export class PatientService {
   constructor(
@@ -22,7 +25,7 @@ export class PatientService {
     @Inject(forwardRef(() => UploadsService))
     private patientRepository: Repository<Patient>,
     private uploadService: UploadsService,
-  ) {}
+  ) { }
 
   async create(createPatientDto: CreatePatientDto, file): Promise<Patient> {
     const { fname, lname, gender, birthday, address } = createPatientDto;
@@ -52,8 +55,12 @@ export class PatientService {
     }
   }
 
+
   async findAll(): Promise<Patient[]> {
-    return await this.patientRepository.find();
+    return await this.patientRepository.find({
+      order: { created: "DESC" } ,
+      relations: ['upload'],
+    });
   }
 
   async findOne(cid: string): Promise<Patient> {
