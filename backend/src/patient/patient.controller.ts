@@ -9,7 +9,6 @@ import { UploadsService } from 'src/uploads/uploads.service';
 import { CreateUploadDto } from 'src/uploads/dto/create-upload.dto';
 import { storage } from 'src/config/storage.config';
 import { PatientInterceptor } from './interceptor/patient.Interceptor';
-import { ApiResponse } from '@nestjs/swagger';
 
 
 
@@ -34,7 +33,6 @@ export class PatientController {
   // }
   
   @Get()
-  @ApiResponse({ status: 201, description: 'The record has been successfully created.' })
   // @UseInterceptors(PatientInterceptor)
   findAll() {
     return this.patientService.findAll()
