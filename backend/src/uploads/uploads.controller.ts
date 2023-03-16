@@ -7,43 +7,31 @@ import { diskStorage } from 'multer';
 import path, { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 
-export const storage = {
-  storage: diskStorage({
-      destination: './uploads/profileimages',
-      filename: (req, file, cb) => {
-          const filename: string = path.parse(file.originalname).name.replace(/\s/g, '') + uuidv4();
-          const extension: string = path.parse(file.originalname).ext;
-
-          cb(null, `${filename}${extension}`)
-      }
-  })
-
-}
 
 @Controller('uploads')
 export class UploadsController {
   constructor(private readonly uploadsService: UploadsService) {}
 
 
-  @Post('patient')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './public/files',
-        filename: (req, file, callback) => {
-        const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const filename = `${uniqueSuffix}${ext}`;
-          console.log(filename);
-          callback(null, filename);
-        },
-      }),
-    }),
-  )
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    // console.log(file);
-  }
+  // @Post('patient')
+  // @UseInterceptors(
+  //   FileInterceptor('file', {
+  //     storage: diskStorage({
+  //       destination: './public/files',
+  //       filename: (req, file, callback) => {
+  //       const uniqueSuffix =
+  //           Date.now() + '-' + Math.round(Math.random() * 1e9);
+  //         const ext = extname(file.originalname);
+  //         const filename = `${uniqueSuffix}${ext}`;
+  //         console.log(filename);
+  //         callback(null, filename);
+  //       },
+  //     }),
+  //   }),
+  // )
+  // uploadFile(@UploadedFile() file: Express.Multer.File) {
+  //   // console.log(file);
+  // }
 
   @Post()
   create(@Body() createUploadDto: CreateUploadDto) {

@@ -1,4 +1,5 @@
 import { IsNotEmpty } from "class-validator"
+import { Upload } from "src/uploads/entities/upload.entity"
 
 export class CreatePatientDto {
     
@@ -19,5 +20,8 @@ export class CreatePatientDto {
 
     @IsNotEmpty()
     birthday: Date
+
+    photo: Upload
+
     
 }

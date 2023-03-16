@@ -1,44 +1,67 @@
-import { Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  UseInterceptors,
+  forwardRef,
+} from '@nestjs/common';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { Repository } from 'typeorm';
 import { Patient } from './entities/patient.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UploadsService } from 'src/uploads/uploads.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { storage } from 'src/config/storage.config';
 
 @Injectable()
 export class PatientService {
   constructor(
     @InjectRepository(Patient)
-    private patientRepository: Repository<Patient>) {
-  }
+    @Inject(forwardRef(() => UploadsService))
+    private patientRepository: Repository<Patient>,
+    private uploadService: UploadsService,
+  ) {}
 
-  async create(createPatientDto: CreatePatientDto,file): Promise<Patient> {
-   
-    const newPatient  = {
-      fname:createPatientDto.fname,
-      lname:createPatientDto.lname,
-      gender:createPatientDto.gender,
-      birthday:createPatientDto.birthday,
-      dob:createPatientDto.dob,
-      address:createPatientDto.address,
-      photo:file
+  async create(createPatientDto: CreatePatientDto, file): Promise<Patient> {
+    const { fname, lname, gender, birthday, address } = createPatientDto;
+
+    try {
+      const upload = await this.uploadService.create(file);
+      const patient = await this.patientRepository.create({
+        fname,
+        lname,
+        gender,
+        birthday,
+        address,
+        upload,
+      });
+      return await this.patientRepository.save(patient);
+    } catch (error) {
+      throw new HttpException(
+        {
+          status: HttpStatus.FORBIDDEN,
+          error: 'เกิดข้อผิดพลาด',
+        },
+        HttpStatus.FORBIDDEN,
+        {
+          cause: error,
+        },
+      );
     }
- 
-    const patient = await this.patientRepository.create(newPatient);
-    return await this.patientRepository.save(patient);
-
   }
 
-  async findAll():Promise<Patient[]> {
+  async findAll(): Promise<Patient[]> {
     return await this.patientRepository.find();
   }
 
-  async findOne(cid: string):Promise<Patient> {
+  async findOne(cid: string): Promise<Patient> {
     try {
-      return  await this.patientRepository.findOne({where: {cid: cid}});
-     } catch (error) {
-       return null;
-     }
+      return await this.patientRepository.findOne({ where: { cid: cid } });
+    } catch (error) {
+      return null;
+    }
   }
 
   update(id: number, updatePatientDto: UpdatePatientDto) {

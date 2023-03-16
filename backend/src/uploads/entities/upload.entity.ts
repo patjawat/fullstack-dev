@@ -4,22 +4,25 @@ import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGe
 @Entity('uploads')
 export class Upload {
 
-    @PrimaryGeneratedColumn()
-    id:number
+    @PrimaryGeneratedColumn('uuid')
+    id:string
 
-    @Column()
-    name:string
+    @Column({ nullable: true, default: null})
+    ref:string
 
-    @Column()
-    rail_name:string
+    @Column({ nullable: true, default: null})
+    originalname:string
 
-    @Column()
-    url:string
+    @Column({ nullable: true, default: null})
+    filename:string
 
-    @Column()
+    @Column({ nullable: true, default: null})
+    path:string
+
+    @Column({ nullable: true, default: null})
     size:number
 
-    @Column()
+    @Column({ nullable: true, default: null})
     type:string
 
     @Column({ nullable: true, default: null})
@@ -40,7 +43,10 @@ export class Upload {
     @Column({ nullable: true, default: null})
     updatedBy:string
 
-    // @OneToOne(type => Patient, patient => patient.photo)
+    // @OneToOne(type => Patient, patients => patients.photo)
+    // patients: Patient
+
+    // @OneToOne(() => Patient, (patient) => patient.upload) // specify inverse side as a second parameter
     // patient: Patient
 
 }

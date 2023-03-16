@@ -3,12 +3,11 @@ import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { v4 as uuidv4 } from 'uuid';
-import { diskStorage } from 'multer';
-import path, { extname } from 'path';
+
 import { Observable } from 'rxjs';
 import { UploadsService } from 'src/uploads/uploads.service';
 import { CreateUploadDto } from 'src/uploads/dto/create-upload.dto';
+import { storage } from 'src/config/storage.config';
 
 
 
@@ -22,11 +21,16 @@ export class PatientController {
 
 
   @Post()
-  // @UseInterceptors(FileInterceptor('file', storage))
-  create(@Body() createPatientDto: CreatePatientDto,createUploadDto:CreateUploadDto,@UploadedFile() file,) {
-  return file;
-    // return this.patientService.create(createPatientDto,file);
+  @UseInterceptors(FileInterceptor('file', storage))
+  create(@Body() createPatientDto: CreatePatientDto,createUploadDto:CreateUploadDto,@UploadedFile() file) {
+      return this.patientService.create(createPatientDto,file);
+    
   }
+  // create(@Body() createPatientDto: CreatePatientDto,createUploadDto:CreateUploadDto,@UploadedFile() file) {
+  // // return file;
+  // console.log(file);
+  
+  // }
 
   @Get()
   findAll() {

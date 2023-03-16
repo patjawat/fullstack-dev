@@ -1,11 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUploadDto } from './dto/create-upload.dto';
 import { UpdateUploadDto } from './dto/update-upload.dto';
+import { Upload } from './entities/upload.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UploadsService {
-  create(createUploadDto: CreateUploadDto) {
-    return 'This action adds a new upload';
+
+  constructor(
+    @InjectRepository(Upload)
+    private uploadRepository:Repository<Upload>
+  ){
+
+  }
+  async create(file):Promise<Upload> {
+    const fileUpload = {
+      filename:file.name,
+      originalname: file.originalname,
+      size: file.size,
+      type: file.mimetype,
+      path: file.path
+    }
+    const upload = this.uploadRepository.create(fileUpload);
+    return await this.uploadRepository.save(upload);
   }
 
   findAll() {
