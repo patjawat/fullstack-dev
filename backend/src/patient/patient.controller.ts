@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Inject, forwardRef } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
@@ -7,34 +7,25 @@ import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
 import path, { extname } from 'path';
 import { Observable } from 'rxjs';
+import { UploadsService } from 'src/uploads/uploads.service';
+import { CreateUploadDto } from 'src/uploads/dto/create-upload.dto';
 
 
-export const storage = {
-  storage: diskStorage({
-      destination: './public/files',
-      filename: (req, file, callback) => {
-        const uniqueSuffix =
-            Date.now() + '-' + Math.round(Math.random() * 1e9);
-          const ext = extname(file.originalname);
-          const filename = `${uniqueSuffix}${ext}`;
-          console.log(filename);
-          callback(null, filename);
-        },
-  })
-
-}
 
 
 @Controller('patient')
 export class PatientController {
-  constructor(private readonly patientService: PatientService) {}
+  constructor(
+    // private readonly uploadService:UploadsService,
+    private readonly patientService: PatientService,
+    ) {}
 
 
   @Post()
-  @UseInterceptors(FileInterceptor('file', storage))
-  create(@Body() createPatientDto: CreatePatientDto,@UploadedFile() file,) {
-    
-    return this.patientService.create(createPatientDto,file.filename);
+  // @UseInterceptors(FileInterceptor('file', storage))
+  create(@Body() createPatientDto: CreatePatientDto,createUploadDto:CreateUploadDto,@UploadedFile() file,) {
+  return file;
+    // return this.patientService.create(createPatientDto,file);
   }
 
   @Get()
