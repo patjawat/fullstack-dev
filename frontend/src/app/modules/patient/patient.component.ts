@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { FormPatientComponent } from './form-patient/form-patient.component';
-import { PatientService } from 'src/app/core/services/patient.service';
-
+// import {environment} from 'src/environments/environment'
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-patient',
   templateUrl: './patient.component.html',
@@ -10,20 +8,11 @@ import { PatientService } from 'src/app/core/services/patient.service';
 })
 export class PatientComponent {
 
-  constructor(
-    private _dialog : MatDialog,
-    private patientService: PatientService,
-  ) {
-
-  }
-
-  ngOnInit() {
-
-  }
-
-
-
-  openDialog() {
-    this._dialog.open(FormPatientComponent);
+  
+  title = 'tutsxxx';
+  
+  ngOnInit(): void {
+   
+    
   }
 }

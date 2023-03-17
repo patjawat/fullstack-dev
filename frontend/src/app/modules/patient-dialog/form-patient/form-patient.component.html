@@ -83,12 +83,20 @@
       </div>
 
       <div class="col-4">
+        {{fileUrl}}
         <mat-card class="example-card">
-          <img
+          <img **ngIf="fileUrl"
             mat-card-image
             [src]="'http://localhost:3000/' + fileUrl"
             alt="Photo of a Shiba Inu"
           />
+
+          <img 
+          mat-card-image
+          src="assets/images/avatar.png"
+          alt="Photo of a Shiba Inu"
+          style="max-width: 250px;"
+        />
           <mat-card-content> </mat-card-content>
           <mat-card-actions>
             <mat-form-field>
