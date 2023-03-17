@@ -12,10 +12,11 @@ import { Repository } from 'typeorm';
 import { Patient } from './entities/patient.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UploadsService } from 'src/uploads/uploads.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { storage } from 'src/config/storage.config';
-
-
+import {
+  paginate,
+  Pagination,
+  IPaginationOptions,
+} from 'nestjs-typeorm-paginate';
 
 
 @Injectable()
@@ -26,6 +27,11 @@ export class PatientService {
     private patientRepository: Repository<Patient>,
     private uploadService: UploadsService,
   ) { }
+
+
+  async paginate(options: IPaginationOptions): Promise<Pagination<Patient>> {
+    return paginate<Patient>(this.patientRepository, options);
+  }
 
   async create(createPatientDto: CreatePatientDto, file): Promise<Patient> {
     const { fname, lname, gender, birthday, address } = createPatientDto;

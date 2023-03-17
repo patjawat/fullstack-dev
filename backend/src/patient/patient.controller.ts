@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Inject, forwardRef } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Inject, forwardRef, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
@@ -9,7 +9,10 @@ import { UploadsService } from 'src/uploads/uploads.service';
 import { CreateUploadDto } from 'src/uploads/dto/create-upload.dto';
 import { storage } from 'src/config/storage.config';
 import { PatientInterceptor } from './interceptor/patient.Interceptor';
-
+import { Pagination } from 'nestjs-typeorm-paginate';
+import { Patient } from './entities/patient.entity';
+import { XX,DB_HOST } from '../config/constants';
+import configuration from 'src/config/configuration';
 
 
 @Controller('patient')
@@ -34,11 +37,23 @@ export class PatientController {
   
   @Get()
   // @UseInterceptors(PatientInterceptor)
-  findAll() {
-    return this.patientService.findAll()
+  findAll(
+    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+  ): Promise<Pagination<Patient>> {
 
-
+    const serverUrl = <string>process.env.SERVER_HOST+'patient/'
+    
+    limit = limit > 100 ? 100 : limit;
+    return this.patientService.paginate({
+      page,
+      limit,
+      route:serverUrl,
+    });
+    
   }
+
+  
 
   @Get(':id')
   findOne(@Param('id') id: string) {
