@@ -30,23 +30,31 @@ export class PatientService {
 
 
   async paginate(options: IPaginationOptions): Promise<Pagination<Patient>> {
-    return paginate<Patient>(this.patientRepository, options);
+    return paginate<Patient>(this.patientRepository, options,{relations:['uploads']});
   }
 
-  async create(createPatientDto: CreatePatientDto, file): Promise<Patient> {
+  async create(files, createPatientDto: CreatePatientDto): Promise<Patient> {
     const { fname, lname, gender, birthday, address } = createPatientDto;
 
     try {
-      const upload = await this.uploadService.create(file);
-      const patient = await this.patientRepository.create({
+     
+      const newPatient = await this.patientRepository.create({
         fname,
         lname,
         gender,
         birthday,
         address,
-        upload,
+        // upload,
       });
-      return await this.patientRepository.save(patient);
+
+      const patient = await this.patientRepository.save(newPatient);
+      
+        await Promise.all(files.map(async file => {
+          const result = await this.uploadService.create(files, patient);
+ 
+        }))
+    
+      return patient;
     } catch (error) {
       throw new HttpException(
         {
@@ -64,8 +72,8 @@ export class PatientService {
 
   async findAll(): Promise<Patient[]> {
     return await this.patientRepository.find({
-      order: { created: "DESC" } ,
-      relations: ['upload'],
+      order: { created: "DESC" },
+      relations: ['uploads'],
     });
   }
 

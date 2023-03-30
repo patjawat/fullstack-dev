@@ -1,6 +1,6 @@
 import { Expose } from "class-transformer";
 import { Upload } from "src/uploads/entities/upload.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 enum Gender {
   Male,
@@ -63,11 +63,18 @@ export class Patient {
   @Column({ nullable: true, default: null })
   updatedBy: string
 
+
+  @OneToMany(() => Upload, (upload) => upload.patient)
+  patient: Upload[]
+
+  @OneToMany(() => Upload, (upload) => upload.patient)
+  uploads: Upload[]
+  
   // @OneToOne(type => Upload, patient => patient.photo )
   // photo:Upload
-  @OneToOne(() => Upload)
-  @JoinColumn()
-  upload: Upload
+  // @OneToOne(() => Upload)
+  // @JoinColumn()
+  // upload: Upload
 
   // @OneToOne(() => photo)
   // @JoinColumn()

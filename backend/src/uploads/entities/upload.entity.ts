@@ -1,5 +1,5 @@
 import { Patient } from "src/patient/entities/patient.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('uploads')
 export class Upload {
@@ -42,6 +42,9 @@ export class Upload {
 
     @Column({ nullable: true, default: null})
     updatedBy:string
+
+    @ManyToOne(() => Patient, (patient) => patient.uploads)
+    patient: Patient
 
     // @OneToOne(type => Patient, patients => patients.photo)
     // patients: Patient

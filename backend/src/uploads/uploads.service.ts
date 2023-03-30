@@ -14,17 +14,22 @@ export class UploadsService {
   ){
 
   }
-  async create(file):Promise<Upload> {
+  async create(files,patient):Promise<Upload> {
     const fileUpload = {
-      filename:file.filename,
-      originalname: file.originalname,
-      size: file.size,
-      type: file.mimetype,
-      path: file.path
+      filename:files[0]?.filename,
+      originalname: files[0]?.originalname,
+      size: files[0]?.size,
+      type: files[0]?.mimetype,
+      path: files[0]?.path,
+      patient
     }
     
     const upload = this.uploadRepository.create(fileUpload);
-    return await this.uploadRepository.save(upload);
+    const result =  await this.uploadRepository.save(upload);
+    // console.log(result);
+    return result;
+    
+    // return await files
   }
 
   findAll() {

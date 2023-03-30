@@ -1,0 +1,14 @@
+<p>upload works!</p>
+<form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="form-patient">
+    
+     <input formControlName="fname" class="form-control form-control-lg" type="text" placeholder=".form-control-lg" aria-label=".form-control-lg example">
+    <input type="file" id="file" multiple 
+            (change)="onFileChange($event)">
+            <button class="btn btn-primary" type="button" (click)="onFormSubmit()">save</button>
+</form>
+
+<pre>{{files | json}}</pre>
+<div *ngFor="let file of files">
+  <!-- <div>*  {{file?.name}} - {{file.type}} - {{file.size}}</div>  -->
+  <div>*  {{file}}</div> 
+</div>

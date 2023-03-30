@@ -1,8 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Inject, forwardRef, Query, DefaultValuePipe, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Inject, forwardRef, Query, DefaultValuePipe, ParseIntPipe, UploadedFiles } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 
 import { Observable } from 'rxjs';
 import { UploadsService } from 'src/uploads/uploads.service';
@@ -24,11 +24,16 @@ export class PatientController {
 
 
   @Post()
-  @UseInterceptors(FileInterceptor('file', storage))
-  create(@Body() createPatientDto: CreatePatientDto, createUploadDto: CreateUploadDto, @UploadedFile() file) {
-    return this.patientService.create(createPatientDto, file);
-
+  @Post()
+  @UseInterceptors(FilesInterceptor('files', 20, storage))
+  create(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() createPatientDto: CreatePatientDto, createUploadDto: CreateUploadDto,
+    ) {
+    return this.patientService.create(files,createPatientDto);
+    
   }
+
   // create(@Body() createPatientDto: CreatePatientDto,createUploadDto:CreateUploadDto,@UploadedFile() file) {
   // // return file;
   // console.log(file);
@@ -36,7 +41,6 @@ export class PatientController {
   // }
   
   @Get()
-  // @UseInterceptors(PatientInterceptor)
   findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
@@ -49,9 +53,11 @@ export class PatientController {
       page,
       limit,
       route:serverUrl,
-    });
+    },
+    );
     
   }
+
 
   
 
