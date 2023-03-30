@@ -6,6 +6,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import path, { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { storage } from 'src/config/storage.config';
 
 
 @Controller('uploads')
@@ -34,8 +35,11 @@ export class UploadsController {
   // }
 
   @Post()
-  create(@Body() createUploadDto: CreateUploadDto) {
-    return this.uploadsService.create(createUploadDto);
+  @UseInterceptors(FileInterceptor('files[]', storage))
+  create(@Body() createUploadDto: CreateUploadDto, @UploadedFile() file) {
+    console.log(file);
+    
+    // return this.uploadsService.create(createUploadDto);
   }
 
   @Get()

@@ -18,7 +18,8 @@ import { FooterComponent } from './layouts/footer/footer.component';
 import { AngularMaterialModule } from './material.module'
 import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
 import { TableModule } from 'primeng/table';
-import { DemoComponent } from './demo/demo.component';  
+import { DemoComponent } from './demo/demo.component';
+import { UploadFileComponent } from './upload-file/upload-file.component';  
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { DemoComponent } from './demo/demo.component';
     AboutComponent,
     HeaderComponent,
     FooterComponent,
-    DemoComponent
+    DemoComponent,
+    UploadFileComponent
   ],
   imports: [
     BrowserModule,
