@@ -6,6 +6,7 @@ import { PatientComponent } from './patient.component';
 const routes: Routes = [
   { path: '', component: PatientComponent },
   { path:'create', component:PatientFormComponent },
+  { path: 'update/:id', component: PatientFormComponent }
 ];
 
 @NgModule({

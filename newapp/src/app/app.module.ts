@@ -6,14 +6,20 @@ import { AppComponent } from './app.component';
 import { UploadComponent } from './upload/upload.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './material.module';
+import { ToastrModule } from 'ngx-toastr';
+import { MenuComponent } from './menu/menu.component';
+import { SpinnerLoadingComponent } from './core/components/spinner-loading/spinner-loading.component';
+import { LoadingInterceptor } from './interceptor/loading.interceptor';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UploadComponent
+    UploadComponent,
+    MenuComponent,
+    SpinnerLoadingComponent
   ],
   imports: [
     BrowserModule,
@@ -22,9 +28,14 @@ import { AngularMaterialModule } from './material.module';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS, useClass: LoadingInterceptor, multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

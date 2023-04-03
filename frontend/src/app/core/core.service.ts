@@ -16,4 +16,6 @@ export class CoreService {
       verticalPosition:'top'
     });
   }
+
+  
 }

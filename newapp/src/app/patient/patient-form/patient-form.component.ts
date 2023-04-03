@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { first } from 'rxjs';
 import { PatientService } from '../patient.service';
+import { CoreService } from 'src/app/core/core.service';
 
 @Component({
   selector: 'app-patient-form',
@@ -10,9 +13,17 @@ import { PatientService } from '../patient.service';
 export class PatientFormComponent {
   form: FormGroup;
   files: string[] = [];
+  uploads:any = {};
+  id:string = '';
+  isAddMode: boolean = false;
+  loading =false;
+
   constructor(
+    private router: Router,
+    private route: ActivatedRoute,
     private _fb: FormBuilder,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private coreService:CoreService
 
   ) { 
     this.form = _fb.group({
@@ -20,14 +31,25 @@ export class PatientFormComponent {
       lname: '',
       cid: '',
       phone:'',
-      file:'',
-      fileUrl:''
+      address:'',
+      birthday:''
     })
   }
 
   ngOnInit(): void {
-    // this.form.patchValue(this.data)
-    // console.log(this.data);
+    this.id = this.route.snapshot.params['id'];
+    this.isAddMode = !this.id;
+    if (this.id) {
+      this.loading = true;
+      this.patientService.getById(this.id)
+      .pipe(first())
+      .subscribe((res)=>{
+        this.form.patchValue(res)
+        this.uploads = res.uploads;
+        // this.loading = false;
+      });
+      // .subscribe(x => this.form.patchValue(x));
+  }
     
   }
 
@@ -38,25 +60,8 @@ export class PatientFormComponent {
       this.files.push(event.target.files[i]);
     }
   }
-  // onFormSubmit() {
-  //   const frmData = new FormData();
-  //   for (var i = 0; i < this.files.length; i++) {
-  //     frmData.append("files", this.files[i]);
-  //   }
-  //   this.uploadService.create(frmData).subscribe((res) => {
-  //     console.log(res
-  //     );
-
-  //   });
-
-  // }
-
-  onFormSubmit() {
-
-    // const formData = new FormData();
-    // for (var i = 0; i < this.patientFiles.length; i++) { 
-    //   formData.append("file[]", this.patientFiles[i]);
-    // }
+  
+  private create() {
 
     const formData = new FormData();
     formData.append('file', this.form.get('file')?.value);
@@ -68,9 +73,9 @@ export class PatientFormComponent {
     }
       this.patientService.create(formData).subscribe({
         next: (res) => {
-          // this._dialogRef.close(true);
-          // this._coreService.openSnackBar('ok','success');
 
+          this.coreService.alertSuccess();
+          this.router.navigate(['/patient'])
         console.log(res);
         
         },
@@ -80,6 +85,46 @@ export class PatientFormComponent {
         },
         complete: () => console.log('done'),
       });
+
   }
 
+  private update() {
+      const formData = new FormData();
+    formData.append('file', this.form.get('file')?.value);
+    formData.append('fname', this.form.get('fname')?.value);
+    formData.append('lname', this.form.get('lname')?.value);
+    formData.append('cid', this.form.get('cid')?.value);
+    formData.append('address', this.form.get('address')?.value);
+    for (var i = 0; i < this.files.length; i++) {
+      formData.append("files", this.files[i]);
+    }
+    this.patientService.update(this.id, this.form.value)
+            .pipe(first())
+            .subscribe({
+                next: () => {
+                    // this.alertService.success('User updated', { keepAfterRouteChange: true });
+                    // this.router.navigate(['../../'], { relativeTo: this.route });
+                },
+                error: error => {
+                    // this.alertService.error(error);
+                    this.loading = false;
+                }
+            });
+
+  }
+
+  onFormSubmit() {
+
+    this.loading = true;
+    if (this.id) {
+      this.update();
+    } else {
+      this.create();
+    }
+  
+  }
+
+
 }
+
+

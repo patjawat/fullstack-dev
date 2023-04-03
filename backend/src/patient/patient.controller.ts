@@ -67,13 +67,13 @@ export class PatientController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePatientDto: UpdatePatientDto) {
-    return this.patientService.update(+id, updatePatientDto);
+  update(@Param('id') id: any, @Body() updatePatientDto: UpdatePatientDto) {
+    return this.patientService.update(id, updatePatientDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.patientService.remove(+id);
+  remove(@Param('id') id: any) {
+    return this.patientService.remove(id);
   }
 }
 

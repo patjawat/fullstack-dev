@@ -1,3 +1,5 @@
+
+
 <div class="container">
 
 <form [formGroup]="form" (ngSubmit)="onFormSubmit()" class="form-patient">
@@ -51,7 +53,7 @@
                   matInputCommified
                   type="text"
                   placeholder="ระบุวัน้กิด"
-                  formControlName="cid"
+                  formControlName="birthday"
                 />
               </mat-form-field>
   
@@ -73,7 +75,7 @@
                   matInputCommified
                   type="text"
                   placeholder="ระบุวัน้กิด"
-                  formControlName="cid"
+                  formControlName="address"
                 />
               </mat-form-field>
             </div>
@@ -97,8 +99,8 @@
             style="max-width: 250px;"
           />
 
-          <input type="file" id="file" multiple 
-          (change)="onFileChange($event)">
+          <!-- <input type="file" id="file" multiple 
+          (change)="onFileChange($event)"> -->
 
             <mat-card-content> </mat-card-content>
             <mat-card-actions>
@@ -111,15 +113,15 @@
                     <button mat-flat-button color="primary">Browse File</button>
                   </mat-toolbar>
                   <!-- Fetch selected filed on change -->
-                  <!-- <input
+                  <input
                     type="file"
                     #fileInput
                     id="uploadFile"
-                    (change)="onSelectFile($event)"
+                    (change)="onFileChange($event)"
                     name="uploadFile"
                     multiple="multiple"
                     accept="image/*"
-                  /> -->
+                  />
                 </div>
               </mat-form-field>
             </mat-card-actions>
@@ -128,9 +130,7 @@
       </div>
     </div>
     <button type="submit" class="btn btn-primary">บันทึก</button> | 
-      <button mat-raised-button type="button">
-        ยกเลิก
-      </button>
+      <button mat-raised-button [routerLink]="['/patient']">ยกเลิก</button>
     <div mat-dialog-actions class="action">
     
       <!-- <button
@@ -143,4 +143,25 @@
     </div>
   </form>
 
+</div>
+<!-- {{uploads | json}} -->
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+  <div class="col" *ngFor="let img of uploads">
+    <div class="card shadow-sm">
+      <img src="http://127.0.0.1:3000/{{img?.filename}}"  class="bd-placeholder-img card-img-top" width="100%" height="225"  alt="">
+      <div class="card-body">
+        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+            <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+          </div>
+          <small class="text-body-secondary">9 mins</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 </div>

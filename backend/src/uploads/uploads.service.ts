@@ -16,11 +16,11 @@ export class UploadsService {
   }
   async create(files,patient):Promise<Upload> {
     const fileUpload = {
-      filename:files[0]?.filename,
-      originalname: files[0]?.originalname,
-      size: files[0]?.size,
-      type: files[0]?.mimetype,
-      path: files[0]?.path,
+      filename:files?.filename,
+      originalname: files?.originalname,
+      size: files?.size,
+      type: files?.mimetype,
+      path: files?.path,
       patient
     }
     

@@ -70,22 +70,4 @@ export class Patient {
   @OneToMany(() => Upload, (upload) => upload.patient)
   uploads: Upload[]
   
-  // @OneToOne(type => Upload, patient => patient.photo )
-  // photo:Upload
-  // @OneToOne(() => Upload)
-  // @JoinColumn()
-  // upload: Upload
-
-  // @OneToOne(() => photo)
-  // @JoinColumn()
-  // profile: Profile
-
-
-  // @OneToOne(() => Upload, (upload) => upload.patient) // specify inverse side as a second parameter
-  // upload: Upload
-
-
-  // @ManyToOne(type => Category, category => category.posts)
-  // category:Category
-
 }

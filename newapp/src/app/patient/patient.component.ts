@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-patient',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./patient.component.scss']
 })
 export class PatientComponent {
+
 
 }

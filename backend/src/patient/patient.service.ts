@@ -50,7 +50,9 @@ export class PatientService {
       const patient = await this.patientRepository.save(newPatient);
       
         await Promise.all(files.map(async file => {
-          const result = await this.uploadService.create(files, patient);
+          // console.log(file);
+          
+          await this.uploadService.create(file, patient);
  
         }))
     
@@ -77,19 +79,24 @@ export class PatientService {
     });
   }
 
-  async findOne(cid: string): Promise<Patient> {
+  async findOne(id: string): Promise<Patient> {
     try {
-      return await this.patientRepository.findOne({ where: { cid: cid } });
+      return await this.patientRepository.findOne({ where: { id: id },relations: ['uploads']});
     } catch (error) {
       return null;
     }
   }
 
-  update(id: number, updatePatientDto: UpdatePatientDto) {
-    return `This action updates a #${id} patient`;
+  async update(id: any, updatePatientDto: UpdatePatientDto) {
+    // return `This action updates a #${id} patient`;
+    // return updatePatientDto;
+    return await this.patientRepository.update(id,updatePatientDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} patient`;
+  async remove(id: any) {
+    const deletedPatient = await this.patientRepository.delete(id);
+    if (!deletedPatient.affected) {
+      throw new HttpException('Product not found', HttpStatus.NOT_FOUND);
+    }
   }
 }

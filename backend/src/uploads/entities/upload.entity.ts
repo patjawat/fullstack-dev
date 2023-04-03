@@ -1,6 +1,6 @@
 import { Patient } from "src/patient/entities/patient.entity";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn,BeforeRemove, BeforeInsert,AfterRemove } from "typeorm";
+import * as fs from 'fs';
 @Entity('uploads')
 export class Upload {
 
@@ -43,13 +43,29 @@ export class Upload {
     @Column({ nullable: true, default: null})
     updatedBy:string
 
-    @ManyToOne(() => Patient, (patient) => patient.uploads)
+    @BeforeInsert()
+    insertStatus() {
+    //    console.log(this.filename);
+       
+    }
+
+    @AfterRemove()
+    removeFile() {
+       console.log(this.filename);
+    //    fs.unlink('public/files/'+this.filename, callback)
+       fs.unlink('public/files/'+this.filename, function (err) {
+        if (err) console.error(err);
+    });
+       
+    }
+
+
+    
+
+    @ManyToOne(() => Patient, (patient) => patient.uploads,{
+        cascade: true,
+        onDelete: 'CASCADE',
+      })
     patient: Patient
-
-    // @OneToOne(type => Patient, patients => patients.photo)
-    // patients: Patient
-
-    // @OneToOne(() => Patient, (patient) => patient.upload) // specify inverse side as a second parameter
-    // patient: Patient
 
 }
