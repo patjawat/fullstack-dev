@@ -39,22 +39,22 @@ export class UploadsController {
   constructor(private readonly uploadsService: UploadsService) { }
 
 
-  // @Post('patient')
-  // @UseInterceptors(
-  //   FileInterceptor('file', {
-  //     storage: diskStorage({
-  //       destination: './public/files',
-  //       filename: (req, file, callback) => {
-  //       const uniqueSuffix =
-  //           Date.now() + '-' + Math.round(Math.random() * 1e9);
-  //         const ext = extname(file.originalname);
-  //         const filename = `${uniqueSuffix}${ext}`;
-  //         console.log(filename);
-  //         callback(null, filename);
-  //       },
-  //     }),
-  //   }),
-  // )
+  @Post('patient')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './public/files',
+        filename: (req, file, callback) => {
+        const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const ext = extname(file.originalname);
+          const filename = `${uniqueSuffix}${ext}`;
+          console.log(filename);
+          callback(null, filename);
+        },
+      }),
+    }),
+  )
   // uploadFile(@UploadedFile() file: Express.Multer.File) {
   //   // console.log(file);
   // }

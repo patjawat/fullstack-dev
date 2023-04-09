@@ -11,7 +11,8 @@ const routes: Routes = [
       { path: '', component: MenuComponent, pathMatch: 'full' },
     ],
   },
-  { path: 'patient', loadChildren: () => import('./patient/patient.module').then(m => m.PatientModule) }
+  { path: 'patient', loadChildren: () => import('./patient/patient.module').then(m => m.PatientModule) },
+  { path: 'product', loadChildren: () => import('./product/product.module').then(m => m.ProductModule) }
 ];
 
 @NgModule({

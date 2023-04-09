@@ -8,10 +8,20 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class AppComponent {
   title = 'newapp';
+  width: number = 100;
+  height: number = 100;
+  
+  constructor() {}
 
 
   
   ngOnInit(): void {
+  }
+
+  testNumberChang(event:number){
+    console.log('NumberChang',event);
+    this.height = event;
+    
   }
 
 }

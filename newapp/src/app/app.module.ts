@@ -13,13 +13,21 @@ import { ToastrModule } from 'ngx-toastr';
 import { MenuComponent } from './menu/menu.component';
 import { SpinnerLoadingComponent } from './core/components/spinner-loading/spinner-loading.component';
 import { LoadingInterceptor } from './interceptor/loading.interceptor';
+import { Ex1Component } from './ex1/ex1.component';
+import { ActionBarComponent } from './action-bar/action-bar.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { SidebarComponent } from './shared/components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadComponent,
     MenuComponent,
-    SpinnerLoadingComponent
+    SpinnerLoadingComponent,
+    Ex1Component,
+    ActionBarComponent,
+    HeaderComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,
