@@ -19,8 +19,15 @@ export class Users {
     @UpdateDateColumn()
     updated: Date
 
-    @Column({ type: "enum", enum: UserRole, default: UserRole.USER })
-    role: UserRole;
+    // @Column({ type: "enum", enum: UserRole, default: UserRole.USER })
+    // role: UserRole[];
+    @Column({
+        type: 'enum',
+        enum: UserRole,
+        array: true,
+        default: [UserRole.USER]
+      })
+      public roles: UserRole[]
 
     @OneToMany(type => Post, posts => posts.user)
     posts: Post[]

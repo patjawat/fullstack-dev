@@ -7,6 +7,7 @@ import {MatSnackBar, MatSnackBarRef} from '@angular/material/snack-bar';
 export class CoreService {
 
   durationInSeconds = 5;
+  private loading: boolean = false;
 
   constructor(private _snackBar: MatSnackBar) {}
 
@@ -15,6 +16,14 @@ export class CoreService {
       duration: this.durationInSeconds * 500,
       verticalPosition:'top'
     });
+  }
+
+  setLoading(loading: boolean) {
+    this.loading = loading;
+  }
+
+  getLoading(): boolean {
+    return this.loading;
   }
 
   
