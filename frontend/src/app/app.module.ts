@@ -16,8 +16,7 @@ import { HeaderComponent } from './layouts/header/header.component';
 import { FooterComponent } from './layouts/footer/footer.component';
 
 import { AngularMaterialModule } from './material.module'
-import {AccordionModule} from 'primeng/accordion';     //accordion and accordion tab
-import { TableModule } from 'primeng/table';
+
 import { DemoComponent } from './demo/demo.component';
 import { UploadFileComponent } from './upload-file/upload-file.component';  
 
@@ -39,8 +38,6 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,
-    AccordionModule,
-    TableModule
 
   ],
   // providers: [],
