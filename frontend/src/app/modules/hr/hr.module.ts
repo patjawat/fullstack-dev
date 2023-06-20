@@ -10,7 +10,7 @@ import { ListComponent } from './employee/list/list.component';
 import { EditComponent } from './employee/edit/edit.component';
 import { AngularMaterialModule } from 'src/app/material.module';
 import { TableModule } from 'primeng/table'; 
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatLegacyDialogModule as MatDialogModule} from '@angular/material/legacy-dialog';
 @NgModule({
   declarations: [
     HrComponent,
